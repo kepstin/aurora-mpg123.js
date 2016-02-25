@@ -22,7 +22,7 @@ Mpg123 *Mpg123Initialize(float *outbuf, int outlen) {
 	if (!lib_initialized) {
 		ret = mpg123_init();
 		if (ret != MPG123_OK) return NULL;
-		initialized = 1;
+		lib_initialized = 1;
 	}
 
 	Mpg123 *mpg123 = calloc(1, sizeof(Mpg123));
