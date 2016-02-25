@@ -67,7 +67,7 @@ int Mpg123Decode(Mpg123 *mpg123, void *inbuf, int inlen,
 	size_t done = 0;
 
 	/* Feed in new input, then audio until the internal buffer drains */
-	ret = mpg123_decode(mpg123->handle, inbuf, inlen, mpg123->outbuf, mpg123->outlen, &done);
+	ret = mpg123_decode(mpg123->handle, inbuf, inlen, (unsigned char *) mpg123->outbuf, mpg123->outlen, &done);
 	if (ret == MPG123_NEW_FORMAT) {
 		long rate;
 		int channels, enc;
@@ -78,7 +78,7 @@ int Mpg123Decode(Mpg123 *mpg123, void *inbuf, int inlen,
 		data_cb(done / sizeof(float));
 
 	while (ret != MPG123_ERR && ret != MPG123_NEED_MORE) {
-		ret = mpg123_decode(mpg123->handle, NULL, 0, mpg123->outbuf, mpg123->outlen, &done);
+		ret = mpg123_decode(mpg123->handle, NULL, 0, (unsigned char *) mpg123->outbuf, mpg123->outlen, &done);
 		if (done > 0)
 			data_cb(done / sizeof(float));
 	}
