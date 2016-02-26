@@ -31,7 +31,7 @@ build/libmpg123.js: src/mpg123.c build/mpg123/src/libmpg123/.libs/libmpg123.a
 	$(EMCC) $(EMCC_CFLAGS) $(EMCC_LDFLAGS) -I build/mpg123/src/libmpg123 -I mpg123/src/libmpg123 $^ -s NO_FILESYSTEM=1 -s RESERVED_FUNCTION_POINTERS=50 -s EXPORTED_FUNCTIONS="['_Mpg123Initialize','_Mpg123Decode','_Mpg123Destroy']" -o $@
 	echo "module.exports = Module;" >> $@
 
-build/mpg123.js: index.js src/demuxer.js build/libmpg123.js
+build/mpg123.js: index.js src/demuxer.js src/decoder.js build/libmpg123.js
 	mkdir -p build
 	browserify --global-transform browserify-shim \
 		--bare --no-detect-globals \
