@@ -3,7 +3,7 @@ var AV = require('av');
 var MP3Demuxer = AV.Demuxer.extend(function() {
 	AV.Demuxer.register(this);
 
-	this.getFormatInfo = function(stream) {
+	this.getFormatInfo = this.prototype.getFormatInfo = function(stream) {
 		var off = stream.offset;
 
 		// Check for an ID3v2 header at the start of the file
@@ -80,7 +80,7 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 		// Need to parse enough of the file to get format & samplerate
 		// so that the decoder can be selected (and used)
 		if (!this.sentInfo) {
-			this.emit("metadata", this.getFormatInfo(stream));
+			this.emit("format", this.getFormatInfo(stream));
 			this.sentInfo = true;
 		}
 
