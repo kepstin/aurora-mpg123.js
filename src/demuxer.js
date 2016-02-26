@@ -26,7 +26,7 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 
 		// Check for sync
 		var sync = stream.readUInt16(false);
-		if (sync & 0xFFFE != 0xFFFA) {
+		if ((sync & 0xFFFE) != 0xFFFA) {
 			stream.seek(off);
 			return null;
 		}
@@ -34,18 +34,18 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 		var rate = stream.readUInt8();
 
 		// Check for a valid bitrate
-		if (rate & 0xF0 < 0x10 || rate & 0xF0 > 0xE0) {
+		if ((rate & 0xF0) < 0x10 || (rate & 0xF0) > 0xE0) {
 			stream.seek(off);
 			return null;
 		}
 
 		// Determine the sample rate
 		var sr = 0;
-		if (rate & 0x0C == 0x00)
+		if ((rate & 0x0C) == 0x00)
 			sr = 44100;
-		else if (rate & 0x0C == 0x04)
+		else if ((rate & 0x0C) == 0x04)
 			sr = 48000;
-		else if (rate & 0x0C ==0x08)
+		else if ((rate & 0x0C) == 0x08)
 			sr = 32000;
 		else {
 			stream.seek(off);
