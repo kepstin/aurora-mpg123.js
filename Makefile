@@ -8,7 +8,7 @@ EMCC_LDFLAGS = --llvm-lto 1 --memory-init-file 0
 export PATH := $(shell npm bin):$(PATH)
 
 .PHONY: all
-all: build/mpg123.emcc.js browser
+all: build/libmpg123.js browser
 
 .PHONY: browser
 browser: build/mpg123.js
