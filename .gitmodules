@@ -1,4 +1,4 @@
 [mpg123]
-	path = mpeg123
+	path = mpg123
 	url = https://github.com/kepstin/mpg123.git
 
