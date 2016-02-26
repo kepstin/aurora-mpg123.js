@@ -56,3 +56,6 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 		}
 	};
 });
+
+module.exports = MP3Demuxer;
+AV.MP3Demuxer = MP3Demuxer;
