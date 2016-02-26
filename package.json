@@ -1,0 +1,32 @@
+{
+  "name": "aurora-mpg123",
+  "version": "1.0.0",
+  "description": "Port of mpg123 decoder to JavaScript via emscripten (Aurora.js framework)",
+  "peerDependencies": {
+    "av": "~0.4.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12"
+  },
+  "browserify-shim": {
+    "av": "global:AV"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kepstin/aurora-mpg123.js.git"
+  },
+  "keywords": [
+    "av",
+    "aurora.js",
+    "audio",
+    "codec",
+    "mp3"
+  ],
+  "author": "Calvin Walton <calvin.walton@kepstin.ca>",
+  "license": "LGPL-2.1",
+  "bugs": {
+    "url": "https://github.com/kepstin/aurora-mpg123.js/issues"
+  },
+  "homepage": "https://github.com/kepstin/aurora-mpg123.js#readme"
+}
