@@ -7,15 +7,15 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 		var off = stream.offset;
 
 		// Check for an ID3v2 header at the start of the file
-		var id3 = stream.readUint24(false);
+		var id3 = stream.readUInt24(false);
 		if (id3 == 0x494433) {
 			// Matches the string 'ID3'
 			stream.advance(3);
 			var size = 0;
-			size |= stream.readUint8() << 21;
-			size |= stream.readUint8() << 14;
-			size |= stream.readUint8() << 7;
-			size |= stream.readUint8() << 0;
+			size |= stream.readUInt8() << 21;
+			size |= stream.readUInt8() << 14;
+			size |= stream.readUInt8() << 7;
+			size |= stream.readUInt8() << 0;
 
 			// Skip over the header
 			stream.advance(size);
@@ -31,7 +31,7 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 			return null;
 		}
 
-		var rate = stream.readUint8();
+		var rate = stream.readUInt8();
 
 		// Check for a valid bitrate
 		if (rate & 0xF0 < 0x10 || rate & 0xF0 > 0xE0) {
