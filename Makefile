@@ -2,7 +2,7 @@ PKG_CONFIG := pkg-config
 EMCC := emcc
 NPM := npm
 
-EMCC_CFLAGS = -O3
+EMCC_CFLAGS = -O2
 EMCC_LDFLAGS = --llvm-lto 1 --memory-init-file 0
 
 export PATH := $(shell npm bin):$(PATH)
@@ -30,10 +30,8 @@ build/mpg123/Makefile:
 build/mpg123/src/libmpg123/.libs/libmpg123.a: build/mpg123/Makefile
 	$(MAKE) -C build/mpg123
 
-build/libmpg123.js: src/mpg123.c build/mpg123/src/libmpg123/.libs/libmpg123.a
-	$(EMCC) $(EMCC_CFLAGS) $(EMCC_LDFLAGS) -I build/mpg123/src/libmpg123 -I mpg123/src/libmpg123 $^ -s NO_FILESYSTEM=1 -s RESERVED_FUNCTION_POINTERS=50 -s EXPORTED_FUNCTIONS="['_Mpg123Initialize','_Mpg123Decode','_Mpg123Destroy']" -o $@
-	echo >> $@
-	echo "module.exports = Module;" >> $@
+build/libmpg123.js: src/mpg123.c build/mpg123/src/libmpg123/.libs/libmpg123.a src/libmpg123-post.js
+	$(EMCC) $(EMCC_CFLAGS) $(EMCC_LDFLAGS) -I build/mpg123/src/libmpg123 -I mpg123/src/libmpg123 src/mpg123.c build/mpg123/src/libmpg123/.libs/libmpg123.a -s NO_FILESYSTEM=1 -s RESERVED_FUNCTION_POINTERS=50 -s EXPORTED_FUNCTIONS="['_Mpg123Initialize','_Mpg123Decode','_Mpg123Destroy']" --post-js src/libmpg123-post.js -o $@
 
 build/mpg123.js: index.js src/demuxer.js src/decoder.js build/libmpg123.js
 	mkdir -p build
