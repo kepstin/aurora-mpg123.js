@@ -24,7 +24,7 @@
     "mp3"
   ],
   "author": "Calvin Walton <calvin.walton@kepstin.ca>",
-  "license": "LGPL-2.1",
+  "license": "(LGPL-2.1 AND MIT)",
   "bugs": {
     "url": "https://github.com/kepstin/aurora-mpg123.js/issues"
   },
