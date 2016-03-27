@@ -52,6 +52,8 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 			return null;
 		}
 
+		stream.seek(off);
+
 		return {
 			formatID: "mp3",
 			sampleRate: sr,
