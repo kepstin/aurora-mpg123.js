@@ -126,7 +126,7 @@ var MP3Decoder = AV.Decoder.extend(function() {
 
 	this.prototype.checkFormat = function(rate, channels) {
 		if (rate != this.format.sampleRate || channels != this.format.channelsPerFrame)
-			throw new TypeError("Sample Rate or Channels changed");
+			throw new TypeError("Sample Rate or Channels changed: Expected " + this.format.sampleRate + "/" + this.format.channelsPerFrame + ", got " + rate + "/" + channels);
 	}
 
 	this.prototype.emitData = function(len) {
