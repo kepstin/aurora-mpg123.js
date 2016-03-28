@@ -2,7 +2,7 @@ PKG_CONFIG := pkg-config
 EMCC := emcc
 NPM := npm
 
-EMCC_CFLAGS = -O3
+EMCC_CFLAGS = -Os
 EMCC_LDFLAGS = --llvm-lto 1 --memory-init-file 0
 
 export PATH := $(shell npm bin):$(PATH)
