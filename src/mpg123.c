@@ -56,7 +56,7 @@ Mpg123 *Mpg123Initialize(float *outbuf, int outlen) {
 	if (ret != MPG123_OK) goto err_free;
 
 	/* Set up the acceptable output formats.
-	 * We only want float32, but mono/stereo and any sample rate is ok. */
+	 * We only want float32 stereo, but any sample rate is ok. */
 	ret = mpg123_format_none(mpg123->handle);
 	/* MPEG-1 layer III */
 	if (ret != MPG123_OK) goto err_free;
