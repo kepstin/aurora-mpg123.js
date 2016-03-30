@@ -27,9 +27,9 @@ var MP3Decoder = AV.Decoder.extend(function() {
 	AV.Decoder.register('mp3', this);
 
 	this.prototype.init = function() {
-		this.inlen = 4096; /* bytes */
+		this.inlen = 8192; /* bytes */
 		this.inbuf = Mpg123._malloc(this.inlen);
-		this.outlen = 4096; /* samples */
+		this.outlen = 65536; /* samples */
 		this.outbuf = Mpg123._malloc(this.outlen << 2);
 		this.outchunks = [];
 		this.outchunkslen = 0;
