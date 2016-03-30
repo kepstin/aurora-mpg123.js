@@ -60,11 +60,11 @@ Mpg123 *Mpg123Initialize(float *outbuf, int outlen) {
 	 * Only enabling the sample rates supported by MPEG-1 layer 3. */
 	ret = mpg123_format_none(mpg123->handle);
 	if (ret != MPG123_OK) goto err_free;
-	ret = mpg123_format(mpg123->handle, 32000, MPG123_STEREO|MPG123_MONO, MPG123_ENC_FLOAT_32);
+	ret = mpg123_format(mpg123->handle, 32000, MPG123_STEREO, MPG123_ENC_FLOAT_32);
 	if (ret != MPG123_OK) goto err_free;
-	ret = mpg123_format(mpg123->handle, 44100, MPG123_STEREO|MPG123_MONO, MPG123_ENC_FLOAT_32);
+	ret = mpg123_format(mpg123->handle, 44100, MPG123_STEREO, MPG123_ENC_FLOAT_32);
 	if (ret != MPG123_OK) goto err_free;
-	ret = mpg123_format(mpg123->handle, 48000, MPG123_STEREO|MPG123_MONO, MPG123_ENC_FLOAT_32);
+	ret = mpg123_format(mpg123->handle, 48000, MPG123_STEREO, MPG123_ENC_FLOAT_32);
 
 	mpg123_open_feed(mpg123->handle);
 	if (ret != MPG123_OK) goto err_free;
