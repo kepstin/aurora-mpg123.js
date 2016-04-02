@@ -47,8 +47,15 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 		}
 
 		// Check for sync
-		var sync = stream.readUInt16(false);
-		if ((sync & 0xFFFE) != 0xFFFA) {
+		var sync = stream.readUInt16(false) & 0xFFFE;
+		var version = 0;
+		if (sync == 0xFFFA) {
+			version = 1;
+		} else if (sync == 0xFFF2 || sync == 0xFFF4 || sync == 0xFFF6) {
+			version = 2;
+		} else if (sync == 0xFFE2) {
+			version = 25;
+		} else {
 			stream.seek(off);
 			return null;
 		}
@@ -63,13 +70,30 @@ var MP3Demuxer = AV.Demuxer.extend(function() {
 
 		// Determine the sample rate
 		var sr = 0;
-		if ((rate & 0x0C) == 0x00)
-			sr = 44100;
-		else if ((rate & 0x0C) == 0x04)
-			sr = 48000;
-		else if ((rate & 0x0C) == 0x08)
-			sr = 32000;
-		else {
+		if (version == 1) {
+			if ((rate & 0x0C) == 0x00)
+				sr = 44100;
+			else if ((rate & 0x0C) == 0x04)
+				sr = 48000;
+			else if ((rate & 0x0C) == 0x08)
+				sr = 32000;
+		} else if (version == 2) {
+			if ((rate & 0x0C) == 0x00)
+				sr = 22050;
+			else if ((rate & 0x0C) == 0x04)
+				sr = 24000;
+			else if ((rate & 0x0C) == 0x08)
+				sr = 16000;
+		} else if (version == 25) {
+			if ((rate & 0x0C) == 0x00)
+				sr = 11025;
+			else if ((rate & 0x0C) == 0x04)
+				sr = 12000;
+			else if ((rate & 0x0C) == 0x08)
+				sr = 8000;
+		}
+
+		if (sr == 0) {
 			stream.seek(off);
 			return null;
 		}

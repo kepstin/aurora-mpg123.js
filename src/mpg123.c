@@ -56,15 +56,29 @@ Mpg123 *Mpg123Initialize(float *outbuf, int outlen) {
 	if (ret != MPG123_OK) goto err_free;
 
 	/* Set up the acceptable output formats.
-	 * We only want float32, but mono/stereo and any sample rate is ok.
-	 * Only enabling the sample rates supported by MPEG-1 layer 3. */
+	 * We only want float32 stereo, but any sample rate is ok. */
 	ret = mpg123_format_none(mpg123->handle);
+	/* MPEG-1 layer III */
 	if (ret != MPG123_OK) goto err_free;
-	ret = mpg123_format(mpg123->handle, 32000, MPG123_STEREO|MPG123_MONO, MPG123_ENC_FLOAT_32);
+	ret = mpg123_format(mpg123->handle, 32000, MPG123_STEREO, MPG123_ENC_FLOAT_32);
 	if (ret != MPG123_OK) goto err_free;
-	ret = mpg123_format(mpg123->handle, 44100, MPG123_STEREO|MPG123_MONO, MPG123_ENC_FLOAT_32);
+	ret = mpg123_format(mpg123->handle, 44100, MPG123_STEREO, MPG123_ENC_FLOAT_32);
 	if (ret != MPG123_OK) goto err_free;
-	ret = mpg123_format(mpg123->handle, 48000, MPG123_STEREO|MPG123_MONO, MPG123_ENC_FLOAT_32);
+	ret = mpg123_format(mpg123->handle, 48000, MPG123_STEREO, MPG123_ENC_FLOAT_32);
+	/* MPEG-2 layer III */
+	if (ret != MPG123_OK) goto err_free;
+	ret = mpg123_format(mpg123->handle, 16000, MPG123_STEREO, MPG123_ENC_FLOAT_32);
+	if (ret != MPG123_OK) goto err_free;
+	ret = mpg123_format(mpg123->handle, 22050, MPG123_STEREO, MPG123_ENC_FLOAT_32);
+	if (ret != MPG123_OK) goto err_free;
+	ret = mpg123_format(mpg123->handle, 24000, MPG123_STEREO, MPG123_ENC_FLOAT_32);
+	/* MPEG-2.5 layer III */
+	if (ret != MPG123_OK) goto err_free;
+	ret = mpg123_format(mpg123->handle, 8000, MPG123_STEREO, MPG123_ENC_FLOAT_32);
+	if (ret != MPG123_OK) goto err_free;
+	ret = mpg123_format(mpg123->handle, 11025, MPG123_STEREO, MPG123_ENC_FLOAT_32);
+	if (ret != MPG123_OK) goto err_free;
+	ret = mpg123_format(mpg123->handle, 12000, MPG123_STEREO, MPG123_ENC_FLOAT_32);
 
 	mpg123_open_feed(mpg123->handle);
 	if (ret != MPG123_OK) goto err_free;

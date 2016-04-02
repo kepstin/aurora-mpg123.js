@@ -27,9 +27,9 @@ var MP3Decoder = AV.Decoder.extend(function() {
 	AV.Decoder.register('mp3', this);
 
 	this.prototype.init = function() {
-		this.inlen = 4096; /* bytes */
+		this.inlen = 8192; /* bytes */
 		this.inbuf = Mpg123._malloc(this.inlen);
-		this.outlen = 4096; /* samples */
+		this.outlen = 65536; /* samples */
 		this.outbuf = Mpg123._malloc(this.outlen << 2);
 		this.outchunks = [];
 		this.outchunkslen = 0;
@@ -126,7 +126,7 @@ var MP3Decoder = AV.Decoder.extend(function() {
 
 	this.prototype.checkFormat = function(rate, channels) {
 		if (rate != this.format.sampleRate || channels != this.format.channelsPerFrame)
-			throw new TypeError("Sample Rate or Channels changed");
+			throw new TypeError("Sample Rate or Channels changed: Expected " + this.format.sampleRate + "/" + this.format.channelsPerFrame + ", got " + rate + "/" + channels);
 	}
 
 	this.prototype.emitData = function(len) {

@@ -2,7 +2,7 @@ PKG_CONFIG := pkg-config
 EMCC := emcc
 NPM := npm
 
-EMCC_CFLAGS = -O2
+EMCC_CFLAGS = -Os
 EMCC_LDFLAGS = --llvm-lto 1 --memory-init-file 0
 
 export PATH := $(shell npm bin):$(PATH)
@@ -25,7 +25,7 @@ native-test: build/native-test
 
 build/mpg123/Makefile:
 	mkdir -p build/mpg123
-	(cd build/mpg123 && emconfigure ../../mpg123/configure --with-cpu=generic_fpu --disable-fifo --disable-network --disable-layer1 --disable-layer2 --disable-shared --enable-static --disable-ntom --disable-downsample --disable-icy --disable-messages --disable-feature-report --disable-8bit --disable-16bit --disable-32bit --disable-equalizer CFLAGS="$(EMCC_CFLAGS)")
+	(cd build/mpg123 && emconfigure ../../mpg123/configure --with-cpu=generic_fpu --disable-fifo --disable-network --disable-id3v2 --disable-string --disable-layer1 --disable-layer2 --disable-shared --enable-static --disable-ntom --disable-downsample --disable-icy --disable-messages --disable-feature-report --disable-8bit --disable-16bit --disable-32bit --disable-equalizer CFLAGS="$(EMCC_CFLAGS)")
 
 build/mpg123/src/libmpg123/.libs/libmpg123.a: build/mpg123/Makefile
 	$(MAKE) -C build/mpg123

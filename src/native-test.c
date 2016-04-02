@@ -31,7 +31,8 @@ Mpg123 *Mpg123Initialize(float *, int);
 int Mpg123Decode(Mpg123 *, void *, int, AVDataCallback, AVFormatCallback);
 void Mpg123Destroy(Mpg123 *);
 
-#define BUF_LEN 1024
+#define INBUF_LEN 8192
+#define OUTBUF_LEN 65536
 
 static void *inbuf;
 static float *outbuf;
@@ -50,11 +51,11 @@ int main(int argc, char *argv[]) {
 
 	fprintf(stderr, "Pass an mp3 on stdin; raw audio will be given on stdout\n");
 
-	inbuf = calloc(BUF_LEN, sizeof(uint8_t));
-	outbuf = calloc(BUF_LEN, sizeof(float));
+	inbuf = calloc(INBUF_LEN, sizeof(uint8_t));
+	outbuf = calloc(OUTBUF_LEN, sizeof(float));
 
 	fprintf(stderr, "Mpg123Initialize\n");
-	struct Mpg123 *mpg123 = Mpg123Initialize(outbuf, BUF_LEN);
+	struct Mpg123 *mpg123 = Mpg123Initialize(outbuf, OUTBUF_LEN);
 	if (mpg123 == NULL) {
 		fprintf(stderr, "Mpeg123Initialize failed (returned NULL handle)\n");
 		return 1;
@@ -62,7 +63,7 @@ int main(int argc, char *argv[]) {
 	fprintf(stderr, "Mpg123Initialize OK\n");
 
 	int inbuflen;
-	while (inbuflen = fread(inbuf, sizeof(uint8_t), BUF_LEN, stdin)) {
+	while (inbuflen = fread(inbuf, sizeof(uint8_t), INBUF_LEN, stdin)) {
 		fprintf(stderr, "Mpg123Decode: %d\n", inbuflen);
 		ret = Mpg123Decode(mpg123, inbuf, inbuflen, data_cb, format_cb);
 		if (ret != 0) {
